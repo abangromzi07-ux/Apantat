@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>Jawab Pertanyaan | DzakkSystem Anonymous</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+    --bg: #050505;
+    --panel: #101010;
+    --panel-2: #171717;
+    --border: #292929;
+    --text: #ffffff;
+    --muted: #888888;
+    --soft: #c8c8c8;
+    --white: #ffffff;
+    --black: #050505;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html {
+    height: 100%;
+    background: var(--bg);
+}
+
+body {
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background:
+        radial-gradient(ellipse at 50% -20%, #222222 0%, transparent 55%),
+        var(--bg);
+    color: var(--text);
+}
+
+/* HEADER */
+
+.topbar {
+    width: 100%;
+    flex-shrink: 0;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8, 8, 8, 0.94);
+    backdrop-filter: blur(18px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 5;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+}
+
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #444;
+    background: linear-gradient(145deg, #242424, #080808);
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+.brand-info {
+    min-width: 0;
+}
+
+.brand-title {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.brand-subtitle {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.online-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid #303030;
+    border-radius: 20px;
+    padding: 7px 10px;
+    color: #d0d0d0;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    background: #a7a7a7;
+    border-radius: 50%;
+    box-shadow: 0 0 9px #777;
+}
+
+/* QUESTION CARD */
+
+.question-wrap {
+    flex-shrink: 0;
+    padding: 17px 16px 12px;
+}
+
+.question-card {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    background: linear-gradient(145deg, #171717, #0d0d0d);
+    border: 1px solid #303030;
+    border-radius: 19px;
+    padding: 17px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.question-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.question-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: #aaa;
+    font-weight: 700;
+}
+
+.question-label i {
+    color: #fff;
+}
+
+.question-tag {
+    font-size: 9px;
+    color: #aaa;
+    border: 1px solid #333;
+    padding: 5px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.question-text {
+    font-size: clamp(15px, 3vw, 19px);
+    line-height: 1.65;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.question-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #292929;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #888;
+    font-size: 10px;
+}
+
+.question-footer i {
+    font-size: 11px;
+}
+
+/* CHAT */
+
+.chat-area {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #383838 transparent;
+}
+
+.chat-area::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+    background: #383838;
+    border-radius: 10px;
+}
+
+.chat-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 2px 0;
+}
+
+.chat-divider::before,
+.chat-divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #252525;
+}
+
+.bubble-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    animation: bubbleIn 0.22s ease;
+}
+
+.bubble-row.mine {
+    align-items: flex-end;
+}
+
+@keyframes bubbleIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bubble-user {
+    color: #858585;
+    font-size: 10px;
+    font-weight: 600;
+    margin: 0 0 5px 5px;
+}
+
+.bubble {
+    max-width: min(82%, 560px);
+    padding: 12px 15px;
+    border: 1px solid #292929;
+    background: #151515;
+    border-radius: 17px 17px 17px 5px;
+    color: #e8e8e8;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.bubble-row.mine .bubble {
+    background: #f4f4f4;
+    color: #080808;
+    border-color: #f4f4f4;
+    border-radius: 17px 17px 5px 17px;
+}
+
+.bubble-time {
+    font-size: 9px;
+    color: #666;
+    margin: 5px 5px 0;
+}
+
+.bubble-row.mine .bubble-time {
+    text-align: right;
+}
+
+.empty-chat {
+    margin: auto;
+    text-align: center;
+    padding: 28px 15px;
+    max-width: 300px;
+    color: #777;
+}
+
+.empty-icon {
+    width: 57px;
+    height: 57px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #303030;
+    background: #121212;
+    color: #bbb;
+    border-radius: 18px;
+    font-size: 20px;
+}
+
+.empty-chat h3 {
+    color: #ddd;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.empty-chat p {
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.loading-state {
+    margin: auto;
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+}
+
+.loading-spinner {
+    width: 25px;
+    height: 25px;
+    border: 2px solid #303030;
+    border-top-color: #fff;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* INPUT */
+
+.composer-wrap {
+    flex-shrink: 0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(8, 8, 8, 0.97);
+    border-top: 1px solid #292929;
+}
+
+.composer {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 7px;
+    background: #131313;
+    border: 1px solid #333;
+    border-radius: 18px;
+    transition: border-color 0.2s;
+}
+
+.composer:focus-within {
+    border-color: #777;
+}
+
+.reply-input {
+    flex: 1;
+    min-width: 0;
+    min-height: 42px;
+    max-height: 120px;
+    resize: none;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    padding: 11px 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-y: auto;
+}
+
+.reply-input::placeholder {
+    color: #707070;
+}
+
+.send-btn {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 13px;
+    background: #fff;
+    color: #050505;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.send-btn:active {
+    transform: scale(0.93);
+}
+
+.send-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.composer-note {
+    max-width: 850px;
+    margin: 8px auto 0;
+    padding-left: 5px;
+    color: #626262;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.composer-note i {
+    font-size: 10px;
+}
+
+/* ERROR / TOAST */
+
+.page-state {
+    display: none;
+    flex: 1;
+    padding: 25px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.page-state.show {
+    display: flex;
+}
+
+.state-card {
+    width: 100%;
+    max-width: 350px;
+    padding: 28px 22px;
+    border: 1px solid #303030;
+    border-radius: 22px;
+    background: #111;
+}
+
+.state-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 17px;
+    border-radius: 19px;
+    background: #202020;
+    color: #ddd;
+    font-size: 23px;
+}
+
+.state-card h2 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.state-card p {
+    color: #888;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 100px;
+    transform: translate(-50%, 15px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 30;
+    max-width: calc(100% - 32px);
+    padding: 12px 17px;
+    border: 1px solid #393939;
+    border-radius: 12px;
+    background: #171717;
+    color: #eee;
+    font-size: 11px;
+    box-shadow: 0 10px 30px #0008;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (min-width: 700px) {
+    .topbar {
+        padding-left: max(22px, calc((100% - 850px) / 2));
+        padding-right: max(22px, calc((100% - 850px) / 2));
+    }
+
+    .question-wrap {
+        padding-top: 22px;
+    }
+
+    .question-card {
+        padding: 22px;
+    }
+
+    .chat-area {
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .topbar {
+        padding: 11px 12px;
+    }
+
+    .brand-title {
+        font-size: 12px;
+    }
+
+    .online-status {
+        font-size: 9px;
+        padding: 6px 8px;
+    }
+
+    .question-wrap {
+        padding: 12px 11px 8px;
+    }
+
+    .question-card {
+        padding: 14px;
+        border-radius: 15px;
+    }
+
+    .chat-area {
+        padding: 12px;
+    }
+
+    .composer-wrap {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-logo">
+            <i class="fa-solid fa-comment-dots"></i>
+        </div>
+        <div class="brand-info">
+            <div class="brand-title">DzakkSystem Anonymous</div>
+            <div class="brand-subtitle">Anonymous Reply Room</div>
+        </div>
+    </div>
+
+    <div class="online-status">
+        <span class="status-dot"></span>
+        <span>REALTIME CHAT</span>
+    </div>
+</header>
+
+<section class="question-wrap" id="questionWrap">
+    <div class="question-card">
+        <div class="question-top">
+            <div class="question-label">
+                <i class="fa-solid fa-circle-question"></i>
+                Pertanyaan untukmu
+            </div>
+            <span class="question-tag">ANONYMOUS</span>
+        </div>
+
+        <div class="question-text" id="displayQuestion">
+            Memuat pertanyaan...
+        </div>
+
+        <div class="question-footer">
+            <i class="fa-solid fa-lock"></i>
+            Balas dengan sopan dan tetap hormati privasi.
+        </div>
+    </div>
+</section>
+
+<main class="chat-area" id="chatList">
+    <div class="loading-state" id="loadingState">
+        <div class="loading-spinner"></div>
+        Memuat percakapan...
+    </div>
+</main>
+
+<div class="composer-wrap" id="composerWrap">
+    <div class="composer">
+        <textarea
+            id="replyInput"
+            class="reply-input"
+            placeholder="Tulis balasanmu..."
+            rows="1"
+            maxlength="2000"
+            autocomplete="off"
+            aria-label="Tulis balasan"
+        ></textarea>
+
+        <button
+            type="button"
+            onclick="sendReply()"
+            class="send-btn"
+            id="sendBtn"
+            aria-label="Kirim balasan"
+            title="Kirim balasan"
+        >
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
+    </div>
+
+    <div class="composer-note">
+        <i class="fa-solid fa-shield-halved"></i>
+        Pesan akan tersimpan di percakapan ini.
+    </div>
+</div>
+
+<section class="page-state" id="pageState">
+    <div class="state-card">
+        <div class="state-icon" id="stateIcon">
+            <i class="fa-solid fa-link-slash"></i>
+        </div>
+        <h2 id="stateTitle">Link tidak valid</h2>
+        <p id="stateDescription">
+            Link pertanyaan tidak ditemukan atau tidak dapat dibuka.
+        </p>
+    </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    push,
+    set
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCP0yuDkZlZteBq9dhQKkOGSOzxdwmgDAU",
+    authDomain: "deng-deng-deng-deng.firebaseapp.com",
+    databaseURL: "https://deng-deng-deng-deng-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "deng-deng-deng-deng",
+    storageBucket: "deng-deng-deng-deng.firebasestorage.app",
+    messagingSenderId: "973147508574",
+    appId: "1:973147508574:web:5f85580edf52d738f4c9cf"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const params = new URLSearchParams(window.location.search);
+const questionId = params.get("id");
+
+const displayQuestion = document.getElementById("displayQuestion");
+const questionWrap = document.getElementById("questionWrap");
+const chatList = document.getElementById("chatList");
+const replyInput = document.getElementById("replyInput");
+const sendBtn = document.getElementById("sendBtn");
+const composerWrap = document.getElementById("composerWrap");
+const pageState = document.getElementById("pageState");
+const loadingState = document.getElementById("loadingState");
+const toast = document.getElementById("toast");
+
+let questionExists = false;
+let sending = false;
+let toastTimer;
+let firstRender = true;
+
+/*
+ * Nama ini hanya label tampilan, bukan autentikasi.
+ * Pengguna bisa mengganti localStorage dari browser.
+ */
+let myUsername = localStorage.getItem("username");
+
+if (!myUsername) {
+    myUsername = "Guest_" + Math.random().toString(36).slice(2, 8);
+    localStorage.setItem("username", myUsername);
+}
+
+function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2600);
+}
+
+function showPageError(title, description, icon = "fa-circle-exclamation") {
+    questionWrap.classList.add("hidden");
+    chatList.classList.add("hidden");
+    composerWrap.classList.add("hidden");
+    pageState.classList.add("show");
+
+    document.getElementById("stateTitle").textContent = title;
+    document.getElementById("stateDescription").textContent = description;
+    document.getElementById("stateIcon").innerHTML =
+        `<i class="fa-solid ${icon}"></i>`;
+}
+
+function formatTime(timestamp) {
+    if (!timestamp || !Number.isFinite(Number(timestamp))) {
+        return "";
+    }
+
+    return new Date(Number(timestamp)).toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+function renderReplies(replies) {
+    const previousScrollTop = chatList.scrollTop;
+    const wasNearBottom =
+        chatList.scrollHeight - chatList.scrollTop - chatList.clientHeight < 100;
+
+    chatList.replaceChildren();
+
+    const divider = document.createElement("div");
+    divider.className = "chat-divider";
+    divider.textContent = "Percakapan";
+    chatList.appendChild(divider);
+
+    const entries = Object.entries(replies || {}).sort((a, b) => {
+        return Number(a[1]?.timestamp || 0) - Number(b[1]?.timestamp || 0);
+    });
+
+    if (entries.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-chat";
+
+        const icon = document.createElement("div");
+        icon.className = "empty-icon";
+
+        const iconElement = document.createElement("i");
+        iconElement.className = "fa-regular fa-comments";
+        icon.appendChild(iconElement);
+
+        const title = document.createElement("h3");
+        title.textContent = "Belum ada balasan";
+
+        const description = document.createElement("p");
+        description.textContent =
+            "Jadilah orang pertama yang membalas pertanyaan ini.";
+
+        empty.append(icon, title, description);
+        chatList.appendChild(empty);
+    } else {
+        for (const [replyId, reply] of entries) {
+            if (!reply || typeof reply !== "object") continue;
+
+            const row = document.createElement("div");
+            const isMe = reply.user === myUsername;
+
+            row.className = `bubble-row${isMe ? " mine" : ""}`;
+            row.dataset.replyId = replyId;
+
+            if (!isMe) {
+                const username = document.createElement("span");
+                username.className = "bubble-user";
+                username.textContent =
+                    typeof reply.user === "string" ? reply.user : "Guest";
+                row.appendChild(username);
+            }
+
+            const bubble = document.createElement("div");
+            bubble.className = "bubble";
+
+            // textContent mencegah teks pengguna dieksekusi sebagai HTML.
+            bubble.textContent =
+                typeof reply.text === "string" ? reply.text : "";
+
+            row.appendChild(bubble);
+
+            const time = document.createElement("span");
+            time.className = "bubble-time";
+            time.textContent = formatTime(reply.timestamp);
+
+            if (time.textContent) {
+                row.appendChild(time);
+            }
+
+            chatList.appendChild(row);
+        }
+    }
+
+    if (firstRender || wasNearBottom) {
+        chatList.scrollTop = chatList.scrollHeight;
+    } else {
+        chatList.scrollTop = previousScrollTop;
+    }
+
+    firstRender = false;
+}
+
+if (!questionId || !/^[A-Za-z0-9_-]+$/.test(questionId)) {
+    showPageError(
+        "Link tidak valid",
+        "ID pertanyaan tidak ditemukan. Periksa kembali link yang kamu terima.",
+        "fa-link-slash"
+    );
+} else {
+    const questionRef = ref(db, `questions/${questionId}`);
+
+    onValue(
+        questionRef,
+        (snapshot) => {
+            const data = snapshot.val();
+
+            if (!data) {
+                questionExists = false;
+                sendBtn.disabled = true;
+
+                showPageError(
+                    "Pertanyaan tidak ditemukan",
+                    "Pertanyaan ini mungkin sudah dihapus atau link yang kamu buka salah.",
+                    "fa-circle-question"
+                );
+                return;
+            }
+
+            questionExists = true;
+            sendBtn.disabled = false;
+
+            pageState.classList.remove("show");
+            questionWrap.classList.remove("hidden");
+            chatList.classList.remove("hidden");
+            composerWrap.classList.remove("hidden");
+
+            displayQuestion.textContent =
+                typeof data.text === "string"
+                    ? data.text
+                    : "Pertanyaan tidak memiliki teks.";
+
+            renderReplies(data.replies || {});
+        },
+        (error) => {
+            console.error("Gagal membaca pertanyaan:", error);
+
+            showPageError(
+                "Gagal memuat pertanyaan",
+                "Database tidak bisa diakses. Coba lagi nanti atau periksa aturan akses Firebase.",
+                "fa-triangle-exclamation"
+            );
+        }
+    );
+}
+
+window.sendReply = async function () {
+    const text = replyInput.value.trim();
+
+    if (!questionId || !questionExists) {
+        showToast("Pertanyaan tidak tersedia.");
+        return;
+    }
+
+    if (!text) {
+        showToast("Tulis balasan terlebih dahulu.");
+        replyInput.focus();
+        return;
+    }
+
+    if (text.length > 2000) {
+        showToast("Balasan maksimal 2000 karakter.");
+        return;
+    }
+
+    if (sending) return;
+
+    sending = true;
+    sendBtn.disabled = true;
+
+    try {
+        const repliesRef = ref(db, `questions/${questionId}/replies`);
+        const newReplyRef = push(repliesRef);
+
+        await set(newReplyRef, {
+            text: text,
+            user: myUsername,
+            timestamp: Date.now()
+        });
+
+        replyInput.value = "";
+        replyInput.style.height = "42px";
+        showToast("Balasan berhasil dikirim.");
+        replyInput.focus();
+    } catch (error) {
+        console.error("Gagal mengirim balasan:", error);
+        showToast("Balasan gagal dikirim. Periksa koneksi atau izin Firebase.");
+    } finally {
+        sending = false;
+        sendBtn.disabled = !questionExists;
+    }
+};
+
+replyInput.addEventListener("input", () => {
+    replyInput.style.height = "42px";
+    replyInput.style.height =
+        Math.min(replyInput.scrollHeight, 120) + "px";
+});
+
+replyInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        window.sendReply();
+    }
+});
+</script>
+
+</body>
+</html>
